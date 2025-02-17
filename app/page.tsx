@@ -1,10 +1,9 @@
-import { Button } from '@/components/ui/button'
+import TodoApp from '@/components/ToDoApp';
 
 export default function Home() {
   return (
     <>
-      <h1> To Do App! </h1>
-      <Button> This is a Shadcn Button!</Button>
+      <TodoApp></TodoApp>
     </>
     
   );
