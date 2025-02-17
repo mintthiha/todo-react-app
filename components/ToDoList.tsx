@@ -16,10 +16,15 @@ export default function TodoApp() {
     }
   };
 
+  const deleteTodo = (index: number) => {
+    // Removes task with associated index
+    setTasks(tasks.filter((oldTask, i) => i !== index));
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
       <Card className="w-full max-w-md p-6 space-y-4">
-        <h1 className="text-2xl font-bold text-center">My Todo App</h1>
+        <h1 className="text-2xl font-bold text-center">Title</h1>
         <div className="flex gap-2">
           <Input
             placeholder="Enter task here!"
@@ -29,8 +34,8 @@ export default function TodoApp() {
           <Button onClick={addTodo}>Add</Button>
         </div>
         <ul className="space-y-2">
-          {tasks.map((t, index) => (
-              <ToDoItem key={index} task={t} />
+          {tasks.map((task, index) => (
+              <ToDoItem key={index} task={task} onDelete={() => deleteTodo(index)}/>
             ))}
         </ul>
       </Card>
