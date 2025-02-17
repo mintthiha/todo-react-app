@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ToDoItem } from "@/components/ToDoItem";
 
 export default function TodoApp() {
   const [task, setTask] = useState("");
@@ -29,10 +30,8 @@ export default function TodoApp() {
         </div>
         <ul className="space-y-2">
           {tasks.map((t, index) => (
-            <li key={index} className="p-2 bg-gray-100 rounded-md">
-              {t}
-            </li>
-          ))}
+              <ToDoItem key={index} task={t} />
+            ))}
         </ul>
       </Card>
     </div>
