@@ -1,9 +1,9 @@
-import TodoApp from '@/components/ToDoList';
+import TodoList from '@/components/ToDoList';
 
 export default function Home() {
   return (
     <>
-      <TodoApp></TodoApp>
+      <TodoList></TodoList>
     </>
     
   );

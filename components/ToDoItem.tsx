@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 interface ToDoItemProps {
-  task: { id: number; text: string; completed: boolean };
+  task: { id: string; text: string; completed: boolean };
   onDelete: () => void;
   onComplete: () => void;
 }

@@ -9,30 +9,29 @@ import { Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface Task {
-  id: number;
+  id: string;
   text: string;
   completed: boolean;
 }
 
-export default function TodoApp() {
+export default function TodoList() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useLocalStorage<Task[]>("todos", []);
   const [filter, setFilter] = useState("all");
 
   const addTodo = () => {
-    // Assign Current time as date, need to change later
     if (task.trim() !== "") {
-      setTasks([...tasks, { id: Date.now(), text: task, completed: false }]);
+      setTasks([...tasks, { id: crypto.randomUUID(), text: task, completed: false }]);
       setTask("");
     }
   };
 
-  const deleteTodo = (index: number) => {
+  const deleteTodo = (index: string) => {
     // Removes task with associated index
     setTasks(tasks.filter((task) => task.id !== index));
   };
 
-  const completeToDO = (index: number) => {
+  const completeToDO = (index: string) => {
     setTasks(
       tasks.map((task) => (task.id === index ? { ...task, completed: !task.completed } : task))
     );
