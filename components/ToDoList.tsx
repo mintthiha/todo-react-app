@@ -29,7 +29,7 @@ export default function TodoApp() {
 
   const deleteTodo = (index: number) => {
     // Removes task with associated index
-    setTasks(tasks.filter((oldTask, i) => i !== index));
+    setTasks(tasks.filter((task) => task.id !== index));
   };
 
   const completeToDO = (index: number) => {
