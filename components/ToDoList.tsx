@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ToDoItem } from "@/components/ToDoItem";
 import { Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { cn } from "@/lib/utils";
+
 
 interface Task {
   id: string;
@@ -18,11 +19,13 @@ export default function TodoList() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useLocalStorage<Task[]>("todos", []);
   const [filter, setFilter] = useState("all");
+  const [showInput, setShowInput] = useState(false);
 
   const addTodo = () => {
     if (task.trim() !== "") {
       setTasks([...tasks, { id: crypto.randomUUID(), text: task, completed: false }]);
       setTask("");
+      setShowInput(false);
     }
   };
 
@@ -56,18 +59,34 @@ export default function TodoList() {
           </TabsList>
         </Tabs>
 
-        <div className="flex gap-2">
-          <Input
-            placeholder="Enter task here!"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-          />
-          <Button onClick={addTodo}>Add</Button>
-        </div>
         <div className="space-y-2">
           {filteredTasks.map((task) => (
               <ToDoItem key={task.id} task={task} onDelete={() => deleteTodo(task.id)} onComplete={() => completeToDO(task.id)}/>
             ))}
+        </div>
+
+        <div
+          className={cn(
+            "relative transition-all rounded-md",
+            showInput ? "bg-white shadow-lg" : "bg-inherit cursor-pointer opacity-50"
+          )}
+          onMouseEnter={() => setShowInput(true)}
+          onMouseLeave={() => !task && setShowInput(false)}
+          onClick={() => setShowInput(true)}
+        >
+          {showInput ? (
+            <Input
+              placeholder="Enter task here!"
+              value={task}
+              onChange={(e) => setTask(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && addTodo()}
+              autoFocus
+            />
+          ) : (
+            <div className="relative flex items-center justify-center">
+              <p className="relative z-10 px-2 bg-inherit text-gray-500 text-sm">+ Add a task</p>
+            </div>
+          )}
         </div>
       </Card>
     </div>
