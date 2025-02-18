@@ -1,10 +1,11 @@
-import TodoList from '@/components/ToDoList';
+// Despite this precision, the page is still causing a hydration error.
+'use client';
 
-export default function Home() {
-  return (
-    <>
-      <TodoList></TodoList>
-    </>
-    
-  );
+import dynamic from "next/dynamic";
+
+//Fixes Hydration error, since the TodoList component will only be rendered on client side.
+const TodoList = dynamic(() => import("@/components/ToDoList"), { ssr: false });
+
+export default function Page() {
+  return <TodoList />;
 }
