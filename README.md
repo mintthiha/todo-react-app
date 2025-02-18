@@ -10,6 +10,7 @@
 
 shadcn: https://ui.shadcn.com/
 nextjs: https://nextjs.org/
+localStorage: https://dev.to/collegewap/how-to-use-local-storage-in-nextjs-2l2j
 
 ##### Link to Deployment
 

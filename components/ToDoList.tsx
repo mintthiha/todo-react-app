@@ -1,10 +1,12 @@
 "use client";
+
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ToDoItem } from "@/components/ToDoItem";
 import { Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 interface Task {
   id: number;
@@ -14,7 +16,7 @@ interface Task {
 
 export default function TodoApp() {
   const [task, setTask] = useState("");
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useLocalStorage<Task[]>("todos", []);
   const [filter, setFilter] = useState("all");
 
   const addTodo = () => {
