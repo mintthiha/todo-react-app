@@ -3,15 +3,16 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 interface ToDoItemProps {
-  task: string;
+  task: { id: number; text: string; completed: boolean };
   onDelete: () => void;
+  onComplete: () => void;
 }
 
-export function ToDoItem({ task, onDelete }: ToDoItemProps) {
-  return <li className="p-2 bg-gray-100 rounded-md"> 
+export function ToDoItem({ task, onDelete, onComplete }: ToDoItemProps) {
+  return <div className="p-2 bg-gray-100 rounded-md"> 
   
-    <Checkbox/> 
-    {task}
+    <Checkbox checked={task.completed} onCheckedChange={onComplete} />
+    {task.text}
     <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
@@ -25,6 +26,5 @@ export function ToDoItem({ task, onDelete }: ToDoItemProps) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-  
-  </li>;
+  </div>;
 }
