@@ -16,10 +16,14 @@ interface Task {
   note?: string;
 }
 
-export default function TodoList() {
+interface TodoListProps {
+  storageKey: string;
+}
+
+export default function TodoList({ storageKey }: TodoListProps) {
   const [task, setTask] = useState("");
   const [note, setNote] = useState("");
-  const [tasks, setTasks] = useLocalStorage<Task[]>("todos", []);
+  const [tasks, setTasks] = useLocalStorage<Task[]>(storageKey, []);
   const [filter, setFilter] = useState("all");
   const [showInput, setShowInput] = useState(false);
 
@@ -50,7 +54,7 @@ export default function TodoList() {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+    <div className="flex flex-col items-center justify-center pt-20 pb-20 pl-4 pr-4">
       <Card className="w-full max-w-md p-6 space-y-4">
         <h1 className="text-2xl font-bold text-center">Title</h1>
         

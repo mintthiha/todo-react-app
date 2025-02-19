@@ -7,5 +7,8 @@ import dynamic from "next/dynamic";
 const TodoList = dynamic(() => import("@/components/ToDoList"), { ssr: false });
 
 export default function Page() {
-  return <TodoList />;
+  return <>
+  <TodoList storageKey="todos-list-1" />
+  <TodoList storageKey="todos-list-2" />
+</>
 }
