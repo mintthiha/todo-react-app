@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ToDoItem } from "@/components/ToDoItem";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { cn } from "@/lib/utils";
 import ToDoTabs from "./ToDoTabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Button } from "./ui/button";
 
 interface Task {
   id: string;
@@ -25,14 +26,14 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
   const [note, setNote] = useState("");
   const [tasks, setTasks] = useLocalStorage<Task[]>(storageKey, []);
   const [filter, setFilter] = useState("all");
-  const [showInput, setShowInput] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const addTodo = () => {
     if (task.trim() !== "") {
       setTasks([...tasks, { id: crypto.randomUUID(), text: task, completed: false, note: note }]);
       setTask("");
       setNote("");
-      setShowInput(false);
+      setIsDialogOpen(false);
     }
   };   
 
@@ -73,32 +74,22 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
         </div>
       </div>
 
-      <div className="p-4">
-        <div
-          className={cn(
-            "relative transition-all rounded-md",
-            showInput ? "bg-white shadow-lg p-3" : "bg-inherit cursor-pointer opacity-50",
-          )}
-          onMouseEnter={() => setShowInput(true)}
-          onMouseLeave={() => !task && setShowInput(false)}
-          onClick={() => setShowInput(true)}
-        >
-          {showInput ? (
-            <div className="space-y-2">
-              <Input placeholder="Enter task here!" value={task} onChange={(e) => setTask(e.target.value)} autoFocus />
-              <Input
-                placeholder="Optional: Add a note!"
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && addTodo()}
-              />
+      <div className="p-4 flex justify-center">
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline">+ Add a task</Button>
+          </DialogTrigger>
+          <DialogContent className="p-6">
+            <DialogHeader>
+              <DialogTitle>Add A New Task</DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col gap-3">
+              <Input placeholder="Task Name" value={task} onChange={(e) => setTask(e.target.value)} autoFocus />
+              <Input placeholder="Optional: Add a note" value={note} onChange={(e) => setNote(e.target.value)} />
+              <Button onClick={addTodo} className="w-full">Add Task</Button>
             </div>
-          ) : (
-            <div className="relative flex items-center justify-center">
-              <p className="relative z-10 px-2 bg-inherit text-gray-500 text-sm">+ Add a task</p>
-            </div>
-          )}
-        </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </Card>
   );

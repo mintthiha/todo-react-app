@@ -33,7 +33,7 @@ export default function TaskListManager() {
             onChange={(e) => setNewListTitle(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addTaskList()}
             />
-            <div className="flex justify-center">
+            <div className="flex justify-center p-4">
               <Button onClick={addTaskList} className="w-[150px]">
                 Add List
               </Button>
