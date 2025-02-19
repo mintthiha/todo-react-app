@@ -33,7 +33,7 @@ export default function TodoAddTask({ onAdd }: ToDoAddTaskProps) {
       <DialogTrigger asChild>
         <Button variant="outline">+ Add a task</Button>
       </DialogTrigger>
-      <DialogContent className="p-6">
+      <DialogContent className="p-6 w-full sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Add A New Task</DialogTitle>
         </DialogHeader>
