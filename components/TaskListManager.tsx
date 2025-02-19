@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import TaskList from "@/components/ToDoList";
+import TaskList from "@/components/ToDo/ToDoList";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import ThemeToggle from "@/components/ThemeToggle";
 import { toast } from "sonner";
