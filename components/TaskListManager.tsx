@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import TaskList from "@/components/ToDoList";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import ThemeToggle from "@/components/ThemeToggle";
+import { toast } from "sonner";
 
 export default function TaskListManager() {
   const [taskLists, setTaskLists] = useLocalStorage<{ id: string; title: string }[]>(
@@ -19,6 +20,21 @@ export default function TaskListManager() {
       const newList = { id: crypto.randomUUID(), title: newListTitle };
       setTaskLists([...taskLists, newList]);
       setNewListTitle("");
+
+      toast.success(`Task list "${newListTitle}" added successfully!`, {
+        position: "bottom-right",
+      });
+    }
+  };
+
+  const deleteTaskList = (id: string) => {
+    const deletedList = taskLists.find((list) => list.id === id);
+    setTaskLists(taskLists.filter((list) => list.id !== id));
+
+    if (deletedList) {
+      toast.warning(`Deleted list "${deletedList.title}"`, {
+        position: "bottom-right",
+      });
     }
   };
 
@@ -46,7 +62,17 @@ export default function TaskListManager() {
       <div className="w-4/5 bg-secondary p-4 overflow-y-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {taskLists.map((list) => (
-            <TaskList key={list.id} storageKey={`todo-list-${list.id}`} title={list.title} />
+            <div key={list.id} className="relative">
+            <TaskList storageKey={`todo-list-${list.id}`} title={list.title} />
+            
+            <Button
+              variant="destructive"
+              size="icon"
+              className="absolute top-2 right-2"
+              onClick={() => deleteTaskList(list.id)}
+            > X
+            </Button>
+          </div>
           ))}
         </div>
       </div>
