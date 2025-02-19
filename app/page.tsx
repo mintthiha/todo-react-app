@@ -4,11 +4,10 @@
 import dynamic from "next/dynamic";
 
 //Fixes Hydration error, since the TodoList component will only be rendered on client side.
-const TodoList = dynamic(() => import("@/components/ToDoList"), { ssr: false });
+const TaskListManager = dynamic(() => import("@/components/TaskListManager"), { ssr: false });
 
 export default function Page() {
   return <>
-  <TodoList storageKey="todos-list-1" />
-  <TodoList storageKey="todos-list-2" />
+  <TaskListManager/>
 </>
 }

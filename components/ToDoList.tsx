@@ -8,7 +8,6 @@ import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { cn } from "@/lib/utils";
 import ToDoTabs from "./ToDoTabs";
 
-
 interface Task {
   id: string;
   text: string;
@@ -18,9 +17,10 @@ interface Task {
 
 interface TodoListProps {
   storageKey: string;
+  title: string;
 }
 
-export default function TodoList({ storageKey }: TodoListProps) {
+export default function TodoList({ storageKey, title }: TodoListProps) {
   const [task, setTask] = useState("");
   const [note, setNote] = useState("");
   const [tasks, setTasks] = useLocalStorage<Task[]>(storageKey, []);
@@ -56,7 +56,7 @@ export default function TodoList({ storageKey }: TodoListProps) {
   return (
     <div className="flex flex-col items-center justify-center pt-20 pb-20 pl-4 pr-4">
       <Card className="w-full max-w-md p-6 space-y-4">
-        <h1 className="text-2xl font-bold text-center">Title</h1>
+        <h1 className="text-2xl font-bold text-center">{title}</h1>
         
         <ToDoTabs setFilter={setFilter}></ToDoTabs>
 
