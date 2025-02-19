@@ -19,7 +19,7 @@ export function ToDoItem({ task, onDelete, onComplete }: ToDoItemProps) {
         <DropDownTaskMenu onDelete={onDelete} />
       </div>
 
-      {task.note && <p className="mt-2 text-sm text-gray-600 pl-8">{task.note}</p>}
+      {task.note && <p className={task.completed ? "mt-2 text-sm text-gray-600 pl-8 line-through" : "mt-2 text-sm text-gray-600 pl-8"}>{task.note}</p>}
     </div>
   );
 }
