@@ -13,21 +13,24 @@ interface Task {
   id: string;
   text: string;
   completed: boolean;
+  note?: string;
 }
 
 export default function TodoList() {
   const [task, setTask] = useState("");
+  const [note, setNote] = useState("");
   const [tasks, setTasks] = useLocalStorage<Task[]>("todos", []);
   const [filter, setFilter] = useState("all");
   const [showInput, setShowInput] = useState(false);
 
   const addTodo = () => {
     if (task.trim() !== "") {
-      setTasks([...tasks, { id: crypto.randomUUID(), text: task, completed: false }]);
+      setTasks([...tasks, { id: crypto.randomUUID(), text: task, completed: false, note: note }]);
       setTask("");
+      setNote("");
       setShowInput(false);
     }
-  };
+  };   
 
   const deleteTodo = (index: string) => {
     // Removes task with associated index
@@ -62,20 +65,27 @@ export default function TodoList() {
         <div
           className={cn(
             "relative transition-all rounded-md",
-            showInput ? "bg-white shadow-lg" : "bg-inherit cursor-pointer opacity-50"
+            showInput ? "bg-white shadow-lg p-3" : "bg-inherit cursor-pointer opacity-50"
           )}
           onMouseEnter={() => setShowInput(true)}
           onMouseLeave={() => !task && setShowInput(false)}
           onClick={() => setShowInput(true)}
         >
           {showInput ? (
-            <Input
-              placeholder="Enter task here!"
-              value={task}
-              onChange={(e) => setTask(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && addTodo()}
-              autoFocus
-            />
+            <div className="space-y-2">
+              <Input
+                placeholder="Enter task here..."
+                value={task}
+                onChange={(e) => setTask(e.target.value)}
+                autoFocus
+              />
+              <Input
+                placeholder="Optional: Add a note..."
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && addTodo()}
+              />
+            </div>
           ) : (
             <div className="relative flex items-center justify-center">
               <p className="relative z-10 px-2 bg-inherit text-gray-500 text-sm">+ Add a task</p>
