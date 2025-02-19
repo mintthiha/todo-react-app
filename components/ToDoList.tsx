@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ToDoItem } from "@/components/ToDoItem";
-import { Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { cn } from "@/lib/utils";
+import ToDoTabs from "./ToDoTabs";
 
 
 interface Task {
@@ -51,13 +51,7 @@ export default function TodoList() {
       <Card className="w-full max-w-md p-6 space-y-4">
         <h1 className="text-2xl font-bold text-center">Title</h1>
         
-        <Tabs defaultValue="all" onValueChange={setFilter}>
-          <TabsList className="flex justify-center">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="complete">Complete</TabsTrigger>
-            <TabsTrigger value="incomplete">Incomplete</TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <ToDoTabs setFilter={setFilter}></ToDoTabs>
 
         <div className="space-y-2">
           {filteredTasks.map((task) => (
