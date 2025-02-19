@@ -23,27 +23,33 @@ export default function TaskListManager() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 space-y-4">
-      <ThemeToggle/>
-      <div className="flex items-center gap-2">
-        <Input
-          placeholder="Enter new list title"
-          value={newListTitle}
-          onChange={(e) => setNewListTitle(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && addTaskList()}
-        />
-        <Button onClick={addTaskList}>Add List</Button>
+    <div className="flex h-screen">
+      <div className="w-1/5 p-4 flex flex-col justify-between">
+        <h1 className="text-3xl font-bold mb-4">Task List Manager</h1>
+          <div>
+            <Input
+            placeholder="Enter new list title"
+            value={newListTitle}
+            onChange={(e) => setNewListTitle(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && addTaskList()}
+            />
+            <div className="flex justify-center">
+              <Button onClick={addTaskList} className="w-[150px]">
+                Add List
+              </Button>
+            </div>
+          </div>
+          
+          <ThemeToggle/>
       </div>
 
-      <div className="flex flex-wrap gap-4">
-        {taskLists.map((list) => (
-          <TaskList
-            key={list.id}
-            storageKey={`todo-list-${list.id}`}
-            title={list.title}
-          />
-        ))}
+      <div className="w-4/5 bg-secondary p-4 overflow-y-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {taskLists.map((list) => (
+            <TaskList key={list.id} storageKey={`todo-list-${list.id}`} title={list.title} />
+          ))}
+        </div>
       </div>
     </div>
-  );
+  )
 }

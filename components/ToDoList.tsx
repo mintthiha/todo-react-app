@@ -54,22 +54,30 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center pt-20 pb-20 pl-4 pr-4">
-      <Card className="w-full max-w-md p-6 space-y-4">
-        <h1 className="text-2xl font-bold text-center">{title}</h1>
-        
-        <ToDoTabs setFilter={setFilter}></ToDoTabs>
+    <Card className="w-full h-[400px] flex flex-col overflow-hidden">
+      <div className="p-4">
+        <h2 className="text-xl font-bold mb-2">{title}</h2>
+        <ToDoTabs setFilter={setFilter} />
+      </div>
 
+      <div className="flex-grow overflow-y-auto p-4">
         <div className="space-y-2">
           {filteredTasks.map((task) => (
-              <ToDoItem key={task.id} task={task} onDelete={() => deleteTodo(task.id)} onComplete={() => completeToDO(task.id)}/>
-            ))}
+            <ToDoItem
+              key={task.id}
+              task={task}
+              onDelete={() => deleteTodo(task.id)}
+              onComplete={() => completeToDO(task.id)}
+            />
+          ))}
         </div>
+      </div>
 
+      <div className="p-4">
         <div
           className={cn(
             "relative transition-all rounded-md",
-            showInput ? "bg-white shadow-lg p-3" : "bg-inherit cursor-pointer opacity-50"
+            showInput ? "bg-white shadow-lg p-3" : "bg-inherit cursor-pointer opacity-50",
           )}
           onMouseEnter={() => setShowInput(true)}
           onMouseLeave={() => !task && setShowInput(false)}
@@ -77,12 +85,7 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
         >
           {showInput ? (
             <div className="space-y-2">
-              <Input
-                placeholder="Enter task here!"
-                value={task}
-                onChange={(e) => setTask(e.target.value)}
-                autoFocus
-              />
+              <Input placeholder="Enter task here!" value={task} onChange={(e) => setTask(e.target.value)} autoFocus />
               <Input
                 placeholder="Optional: Add a note!"
                 value={note}
@@ -96,7 +99,7 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
             </div>
           )}
         </div>
-      </Card>
-    </div>
+      </div>
+    </Card>
   );
 }
