@@ -74,13 +74,13 @@ export default function TodoList() {
           {showInput ? (
             <div className="space-y-2">
               <Input
-                placeholder="Enter task here..."
+                placeholder="Enter task here!"
                 value={task}
                 onChange={(e) => setTask(e.target.value)}
                 autoFocus
               />
               <Input
-                placeholder="Optional: Add a note..."
+                placeholder="Optional: Add a note!"
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addTodo()}

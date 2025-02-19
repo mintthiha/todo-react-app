@@ -39,6 +39,5 @@ export function ToDoItem({ task, onDelete, onComplete}: ToDoItemProps) {
           </div>
         )}
     </>
-   
   );
 }
