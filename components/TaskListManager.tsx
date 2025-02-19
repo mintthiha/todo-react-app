@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import TaskList from "@/components/ToDoList";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function TaskListManager() {
   const [taskLists, setTaskLists] = useLocalStorage<{ id: string; title: string }[]>(
@@ -23,6 +24,7 @@ export default function TaskListManager() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 space-y-4">
+      <ThemeToggle/>
       <div className="flex items-center gap-2">
         <Input
           placeholder="Enter new list title"
