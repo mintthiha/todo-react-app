@@ -1,6 +1,5 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import DropDownTaskMenu from "./DropDownTaskMenu";
 
 interface ToDoItemProps {
   task: { id: string; text: string; completed: boolean; note?: string };
@@ -19,19 +18,8 @@ export function ToDoItem({ task, onDelete, onComplete}: ToDoItemProps) {
           </span>
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              ⋮ 
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem className="text-orange-500"> Edit </DropdownMenuItem>
-            <DropdownMenuItem onClick={onDelete} className="text-red-500">
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <DropDownTaskMenu onDelete={onDelete}></DropDownTaskMenu>
+        
       </div>
         {task.note && (
           <div className="flex items-center justify-between p-3 bg-gray-100 rounded-md">
