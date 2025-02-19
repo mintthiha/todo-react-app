@@ -9,6 +9,8 @@ import ToDoTabs from "./ToDoTabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 
+import { toast } from "sonner"
+
 interface Task {
   id: string;
   text: string;
@@ -31,15 +33,28 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
   const addTodo = () => {
     if (task.trim() !== "") {
       setTasks([...tasks, { id: crypto.randomUUID(), text: task, completed: false, note: note }]);
+
+      toast.success(`Task "${task}" added successfully!`, {
+        position: "bottom-right",
+      });
+
       setTask("");
       setNote("");
       setIsDialogOpen(false);
     }
   };   
 
-  const deleteTodo = (index: string) => {
+  const deleteTodo = (id: string) => {
+    // Find deletedTask to print in Toast
+    const deletedTask = tasks.find((task) => task.id === id);
     // Removes task with associated index
-    setTasks(tasks.filter((task) => task.id !== index));
+    setTasks(tasks.filter((task) => task.id !== id));
+
+    if (deletedTask) {
+      toast.warning(`Task "${deletedTask.text}" deleted!`, {
+        position: "bottom-right",
+      });
+    }
   };
 
   const completeToDO = (index: string) => {
