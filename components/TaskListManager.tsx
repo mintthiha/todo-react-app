@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import TaskList from "@/components/ToDo/ToDoList";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import ThemeToggle from "@/components/ThemeToggle";
-import { toast } from "sonner";
+import { customToast } from "./ui/customToast";
 
 export default function TaskListManager() {
   const [taskLists, setTaskLists] = useLocalStorage<{ id: string; title: string }[]>(
@@ -21,13 +21,9 @@ export default function TaskListManager() {
       setTaskLists([...taskLists, newList]);
       setNewListTitle("");
 
-      toast.success(`Task list "${newListTitle}" added successfully!`, {
-        position: "bottom-right",
-      });
+      customToast({message: `Task list "${newListTitle}" added successfully!`, type: "success"})
     } else{
-      toast.warning("The task list title can't be empty!", {
-        position: "bottom-right",
-      });
+      customToast({message: "The task list title can't be empty!", type: "warning"})
     }
   };
 
@@ -36,9 +32,7 @@ export default function TaskListManager() {
     setTaskLists(taskLists.filter((list) => list.id !== id));
 
     if (deletedList) {
-      toast.warning(`Deleted list "${deletedList.title}"`, {
-        position: "bottom-right",
-      });
+      customToast({message: `Deleted list "${deletedList.title}"`, type: "info"})
     }
   };
 

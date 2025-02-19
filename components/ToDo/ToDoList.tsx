@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import ToDoTabs from "./ToDoTabs";
-import { toast } from "sonner";
 import DisplayToDos from "./DisplayToDos";
 import TodoAddTask from "./ToDoAddTask";
+import { customToast } from "../ui/customToast";
 
 interface Task {
   id: string;
@@ -35,9 +35,7 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
 
       setTasks([...tasks, newTask]);
 
-      toast.success(`Task "${taskText}" added successfully!`, {
-        position: "bottom-right",
-      });
+      customToast({ message: `Task "${taskText}" added successfully!`, type: "success" });
     }
   }; 
 
@@ -48,9 +46,7 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
     setTasks(tasks.filter((task) => task.id !== id));
 
     if (deletedTask) {
-      toast.warning(`Task "${deletedTask.text}" deleted!`, {
-        position: "bottom-right",
-      });
+      customToast({ message: `Task "${deletedTask.text}" deleted!`, type: "info" })
     }
   };
 
