@@ -3,13 +3,12 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { ToDoItem } from "@/components/ToDoItem";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import ToDoTabs from "./ToDoTabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
-
-import { toast } from "sonner"
+import { toast } from "sonner";
+import DisplayToDos from "./DisplayToDos";
 
 interface Task {
   id: string;
@@ -57,7 +56,7 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
     }
   };
 
-  const completeToDO = (index: string) => {
+  const completeToDo = (index: string) => {
     setTasks(
       tasks.map((task) => (task.id === index ? { ...task, completed: !task.completed } : task))
     );
@@ -76,18 +75,7 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
         <ToDoTabs setFilter={setFilter} />
       </div>
 
-      <div className="flex-grow overflow-y-auto p-4">
-        <div className="space-y-2">
-          {filteredTasks.map((task) => (
-            <ToDoItem
-              key={task.id}
-              task={task}
-              onDelete={() => deleteTodo(task.id)}
-              onComplete={() => completeToDO(task.id)}
-            />
-          ))}
-        </div>
-      </div>
+      <DisplayToDos filteredTasks={filteredTasks} deleteTodo={deleteTodo} completeToDO={completeToDo}></DisplayToDos>
 
       <div className="p-4 flex justify-center">
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
