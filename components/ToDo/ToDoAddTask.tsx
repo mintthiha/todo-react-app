@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { toast } from "sonner";
 
 interface ToDoAddTaskProps {
   onAdd: (task: string, note: string) => void;
@@ -20,6 +21,10 @@ export default function TodoAddTask({ onAdd }: ToDoAddTaskProps) {
       setTask("");
       setNote("");
       setIsDialogOpen(false);
+    } else{
+      toast.warning("The task name can't be empty!", {
+        position: "bottom-right",
+      });
     }
   };
 

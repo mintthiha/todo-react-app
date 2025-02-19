@@ -24,6 +24,10 @@ export default function TaskListManager() {
       toast.success(`Task list "${newListTitle}" added successfully!`, {
         position: "bottom-right",
       });
+    } else{
+      toast.warning("The task list title can't be empty!", {
+        position: "bottom-right",
+      });
     }
   };
 
