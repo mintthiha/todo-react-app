@@ -21,7 +21,7 @@ export default function TodoAddTask({ onAdd }: ToDoAddTaskProps) {
       setTask("");
       setNote("");
       setIsDialogOpen(false);
-    } else{
+    } else {
       customToast({ message: "The task name can't be empty!", type: "warning" });
     }
   };
@@ -36,8 +36,18 @@ export default function TodoAddTask({ onAdd }: ToDoAddTaskProps) {
           <DialogTitle>Add A New Task</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-3">
-          <Input placeholder="Task Name" value={task} onChange={(e) => setTask(e.target.value)} autoFocus />
-          <Input placeholder="Optional: Add a note" value={note} onChange={(e) => setNote(e.target.value)} />
+          <Input
+            placeholder="Task Name"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAdd()} 
+            autoFocus
+          />
+          <Input
+            placeholder="Optional: Add a note"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+          />
           <Button onClick={handleAdd} className="w-full">Add Task</Button>
         </div>
       </DialogContent>

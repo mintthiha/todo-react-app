@@ -55,23 +55,14 @@ export default function TaskListManager() {
       })
     }
   }, []);
-  
-  // Will fix later
 
-  // useEffect(() => {
-  //   swapyRef.current?.update();
-  //   swapyRef.current?.onSwapEnd((event) => {
-  //     console.log(event.slotItemMap.asArray);
-  //     const newOrder = event.slotItemMap.asArray.map(({ item }) => {
-  //       return taskLists.find((list) => list.id === item);
-  //     }).filter(Boolean) as { id: string; title: string }[];
-  
-  //     setTaskLists(newOrder);
-  
-  //     console.log("Updated Task Order:", newOrder);
-  //   });
+  useEffect(() => {
+    swapyRef.current?.update();
+  }, [taskLists]);
 
-  // }, [setTaskLists, taskLists]);
+  swapyRef.current?.onSwapEnd((event) => {
+    console.log(event);
+  })
 
   return (
     <div className="flex flex-col lg:flex-row h-screen">
