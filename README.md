@@ -11,6 +11,7 @@
 shadcn: https://ui.shadcn.com/
 nextjs: https://nextjs.org/
 localStorage: https://dev.to/collegewap/how-to-use-local-storage-in-nextjs-2l2j
+Drag and Drop (Swapy): https://github.com/TahaSh/swapy/blob/main/examples/react/App.tsx
 
 ##### Link to Deployment
 
