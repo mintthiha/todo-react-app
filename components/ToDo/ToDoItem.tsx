@@ -9,7 +9,7 @@ interface ToDoItemProps {
 
 export function ToDoItem({ task, onDelete, onComplete }: ToDoItemProps) {
   return (
-    <div className="flex flex-col sm:p-2 md:p-3 rounded-md bg-white dark:bg-gray-800">
+    <div className="flex flex-col sm:p-2 md:p-3 rounded-md bg-gray-100 dark:bg-gray-800">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
         <Checkbox checked={task.completed} onCheckedChange={onComplete} />
