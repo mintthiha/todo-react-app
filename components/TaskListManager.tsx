@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import TaskList from "@/components/ToDo/ToDoList";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import ThemeToggle from "@/components/ThemeToggle";
 import { customToast } from "./ui/customToast";
+import { createSwapy, Swapy } from 'swapy';
 
 export default function TaskListManager() {
   const [taskLists, setTaskLists] = useLocalStorage<{ id: string; title: string }[]>(
@@ -14,6 +15,8 @@ export default function TaskListManager() {
     []
   );
   const [newListTitle, setNewListTitle] = useState("");
+  const swapyRef = useRef<Swapy | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const addTaskList = () => {
     if (newListTitle.trim() !== "") {
@@ -36,6 +39,22 @@ export default function TaskListManager() {
     }
   };
 
+  useEffect(() => {
+    const container = document.querySelector("#swapy-container") as HTMLElement;
+    if (container) {
+      swapyRef.current = createSwapy(container, {
+        animation: 'dynamic',
+        swapMode: 'drop',
+        autoScrollOnDrag: true,
+        dragAxis: 'both'
+      })
+    }
+  }, []);
+  
+  useEffect(() => {
+    swapyRef.current?.update();
+  }, [taskLists]);
+
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       <div className="w-full lg:w-1/5 p-4 flex flex-col justify-between">
@@ -57,20 +76,22 @@ export default function TaskListManager() {
           <ThemeToggle/>
       </div>
 
-      <div className="w-full lg:w-4/5 bg-secondary p-4 overflow-y-auto">
+      <div className="w-full lg:w-4/5 bg-secondary p-4 overflow-y-auto" id="swapy-container" ref={containerRef}>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {taskLists.map((list) => (
-            <div key={list.id} className="relative">
-            <TaskList storageKey={`todo-list-${list.id}`} title={list.title} />
-            
-            <Button
-              variant="destructive"
-              size="icon"
-              className="absolute top-2 right-2"
-              onClick={() => deleteTaskList(list.id)}
-            > X
-            </Button>
-          </div>
+            <div key={list.id} data-swapy-slot={list.id} className="relative">
+              <div data-swapy-item={list.id}>
+                <TaskList storageKey={`todo-list-${list.id}`} title={list.title} />
+                
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  className="absolute top-2 right-2"
+                  onClick={() => deleteTaskList(list.id)}
+                > X
+                </Button>
+              </div>
+            </div>
           ))}
         </div>
       </div>
