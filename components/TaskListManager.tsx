@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import TaskList from "@/components/ToDo/ToDoList";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import ThemeToggle from "@/components/ThemeToggle";
 import { customToast } from "./ui/customToast";
 import { createSwapy, Swapy } from 'swapy';
+import TaskListMangerSideBar from "./TaskListManagerSideBar";
 
 export default function TaskListManager() {
   const [taskLists, setTaskLists] = useLocalStorage<{ id: string; title: string }[]>(
@@ -57,24 +56,7 @@ export default function TaskListManager() {
 
   return (
     <div className="flex flex-col lg:flex-row h-screen">
-      <div className="w-full lg:w-1/5 p-4 flex flex-col justify-between">
-        <h1 className="text-3xl font-bold mb-4">Task List Manager</h1>
-          <div>
-            <Input
-            placeholder="Enter new list title"
-            value={newListTitle}
-            onChange={(e) => setNewListTitle(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && addTaskList()}
-            />
-            <div className="flex justify-center p-4">
-              <Button onClick={addTaskList} className="w-[150px]">
-                Add List
-              </Button>
-            </div>
-          </div>
-          
-          <ThemeToggle/>
-      </div>
+      <TaskListMangerSideBar newListTitle={newListTitle} setNewListTitle={setNewListTitle} addTaskList={addTaskList} />
 
       <div className="w-full lg:w-4/5 bg-secondary p-4 overflow-y-auto" id="swapy-container" ref={containerRef}>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
