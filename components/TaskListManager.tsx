@@ -18,15 +18,21 @@ export default function TaskListManager() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const addTaskList = () => {
-    if (newListTitle.trim() !== "") {
-      const newList = { id: crypto.randomUUID(), title: newListTitle };
-      setTaskLists([...taskLists, newList]);
-      setNewListTitle("");
-
-      customToast({message: `Task list "${newListTitle}" added successfully!`, type: "success"})
-    } else{
-      customToast({message: "The task list title can't be empty!", type: "warning"})
+    if (newListTitle.trim() === "") {
+      customToast({ message: "The task list title can't be empty!", type: "warning" });
+      return;
     }
+  
+    if (newListTitle.length > 25) {
+      customToast({ message: "Task list title cannot exceed 25 characters!", type: "error" });
+      return;
+    }
+  
+    const newList = { id: crypto.randomUUID(), title: newListTitle };
+    setTaskLists([...taskLists, newList]);
+    setNewListTitle("");
+  
+    customToast({ message: `Task list "${newListTitle}" added successfully!`, type: "success" });
   };
 
   const deleteTaskList = (id: string) => {
@@ -63,6 +69,7 @@ export default function TaskListManager() {
           {taskLists.map((list) => (
             <div key={list.id} data-swapy-slot={list.id} className="relative">
               <div data-swapy-item={list.id}>
+                <div className="absolute top-2 left-2 cursor-grab text-2xl leading-none text-gray-400" data-swapy-handle> ⋮⋮ </div>
                 <TaskList storageKey={`todo-list-${list.id}`} title={list.title} />
                 
                 <Button

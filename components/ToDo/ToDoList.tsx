@@ -37,7 +37,7 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
 
       customToast({ message: `Task "${taskText}" added successfully!`, type: "success" });
     }
-  }; 
+  };
 
   const deleteTodo = (id: string) => {
     // Find deletedTask to print in Toast
@@ -65,7 +65,7 @@ export default function TodoList({ storageKey, title }: TodoListProps) {
   return (
     <Card className="w-full h-[400px] flex flex-col overflow-hidden">
       <div className="p-4">
-        <h2 className="text-xl font-bold mb-2">{title}</h2>
+        <h2 className="text-xl font-bold mb-2 pl-5">{title}</h2>
         <ToDoTabs setFilter={setFilter} />
       </div>
 
