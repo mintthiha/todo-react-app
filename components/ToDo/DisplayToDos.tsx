@@ -26,7 +26,7 @@ const DisplayToDos = ({ filteredTasks, deleteTodo, completeToDO }: DisplayToDosP
       animation: "dynamic",
       swapMode: "drop",
       autoScrollOnDrag: true,
-      dragAxis: "y"
+      dragAxis: "y",
     });
 
     if (taskOrder.length > 0) {
@@ -71,6 +71,7 @@ const DisplayToDos = ({ filteredTasks, deleteTodo, completeToDO }: DisplayToDosP
         {orderedTasks.map((task) => (
           <div key={task.id} data-swapy-slot={task.id}>
             <div data-swapy-item={task.id}>
+              {/* <div className="absolutecursor-grab text-2xl leading-none text-gray-400" data-swapy-handle> ⋮⋮ </div> */}
               <ToDoItem
                 task={task}
                 onDelete={() => deleteTodo(task.id)}
