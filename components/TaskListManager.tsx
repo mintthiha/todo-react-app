@@ -16,6 +16,7 @@ export default function TaskListManager() {
   const [newListTitle, setNewListTitle] = useState("");
   const swapyRef = useRef<Swapy | null>(null)
   const containerRef = useRef<HTMLDivElement>(null);
+  const [taskOrder, setTaskOrder] = useLocalStorage<string[]>("taskOrder", []);
 
   const addTaskList = () => {
     if (newListTitle.trim() === "") {
@@ -45,24 +46,41 @@ export default function TaskListManager() {
   };
 
   useEffect(() => {
-    const container = document.querySelector("#swapy-container") as HTMLElement;
-    if (container) {
-      swapyRef.current = createSwapy(container, {
-        animation: 'dynamic',
-        swapMode: 'drop',
-        autoScrollOnDrag: true,
-        dragAxis: 'both'
-      })
+    if (!containerRef.current || swapyRef.current) return;
+  
+    swapyRef.current = createSwapy(containerRef.current, {
+      animation: "dynamic",
+      swapMode: "drop",
+      autoScrollOnDrag: true,
+      dragAxis: "both",
+    });
+  
+    if (taskOrder.length > 0) {
+      const orderedTasks = taskOrder
+        .map((id) => taskLists.find((task) => task.id === id))
+        .filter(Boolean) as { id: string; title: string }[];
+  
+      setTaskLists(orderedTasks);
     }
+  
+    return () => {
+      swapyRef.current?.destroy();
+    };
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  
   useEffect(() => {
-    swapyRef.current?.update();
-  }, [taskLists]);
-
-  swapyRef.current?.onSwapEnd((event) => {
-    console.log(event);
-  })
+    if (!swapyRef.current) return;
+  
+    swapyRef.current.onSwapEnd((event) => {
+      const newOrder = event.slotItemMap.asArray.map(({ item }) => item);
+      console.log("New Order of Task IDs:", newOrder);
+      setTaskOrder(newOrder);
+    });
+  
+    swapyRef.current.update();
+  }, [taskLists, setTaskOrder]);  
 
   return (
     <div className="flex flex-col lg:flex-row h-screen">
