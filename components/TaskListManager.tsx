@@ -52,7 +52,7 @@ export default function TaskListManager() {
       animation: "dynamic",
       swapMode: "drop",
       autoScrollOnDrag: true,
-      dragAxis: "both",
+      dragAxis: "both"
     });
   
     if (taskOrder.length > 0) {
