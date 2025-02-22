@@ -8,6 +8,7 @@ interface DisplayToDosProp {
   completeToDO: (id: string) => void;
 }
 
+// Displays the tasks in the task list
 const DisplayToDos = ({ filteredTasks, deleteTodo, completeToDO }: DisplayToDosProp) => {
 
   return (

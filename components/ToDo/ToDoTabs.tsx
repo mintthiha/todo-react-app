@@ -4,6 +4,7 @@ interface ToDoTabsProps {
   setFilter: (filter: string) => void;
 }
 
+// Displays the tabs for the task list to filter the tasks
 const ToDoTabs = ({ setFilter }: ToDoTabsProps) => {
   return (
     <Tabs defaultValue="all" onValueChange={setFilter}>

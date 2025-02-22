@@ -7,6 +7,7 @@ interface ToDoItemProps {
   onComplete: () => void;
 }
 
+// Displays a single task in the task list
 export function ToDoItem({ task, onDelete, onComplete }: ToDoItemProps) {
   return (
     <div className="flex flex-col sm:p-2 md:p-3 rounded-md bg-gray-100 dark:bg-gray-800">

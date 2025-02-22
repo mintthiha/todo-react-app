@@ -10,11 +10,13 @@ interface ToDoAddTaskProps {
   onAdd: (task: string, note: string) => void;
 }
 
+// Adds a new task to the task list
 export default function TodoAddTask({ onAdd }: ToDoAddTaskProps) {
   const [task, setTask] = useState("");
   const [note, setNote] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  // Handles the addition of a task with validation
   const handleAdd = () => {
     if (task.trim() !== "") {
       onAdd(task, note);
@@ -47,6 +49,7 @@ export default function TodoAddTask({ onAdd }: ToDoAddTaskProps) {
             placeholder="Optional: Add a note"
             value={note}
             onChange={(e) => setNote(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAdd()} 
           />
           <Button onClick={handleAdd} className="w-full">Add Task</Button>
         </div>

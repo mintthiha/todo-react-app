@@ -43,3 +43,10 @@ So initially I tried creating the project using only React, With _create-react-a
 Swapy is a great library for creating drag and drop divs with nice animations. However, it is still very buggy and the documentation is not the best. I tried to use it for the tasks themselves, but I kept running into issues regarding the order of the tasks after dragging them, even the state of it. I feel like I have spent too much time trying to figure out how to use it for the tasks, so for now it will be only on the task lists themselves. I also tried using Swapy for both the lists and the tasks within them, but Swapy would get confused and allowed swapping of lists and tasks, which does not make sense. 
 
 
+##### Things I would like to add
+
+- Allow editing of the task list title
+- Allow editing of the task
+- Add a drag and drop for the tasks within the task lists
+- Add a sidebar with ShadCN, allowing to create many task list managers (one for work, one for home, one for shopping, etc.)
+- Add a recently deleted tasks section located in the sidebar

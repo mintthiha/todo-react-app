@@ -10,6 +10,7 @@ interface TaskListMangerSideBar {
   addTaskList: () => void;
 }
 
+// Displays the side bar for the task list manager
 export default function TaskListMangerSideBar({ newListTitle, setNewListTitle, addTaskList }: TaskListMangerSideBar) {
   return (
     <div className="w-full lg:w-1/5 p-4 flex flex-col justify-between border-r border-gray-300 dark:border-gray-700">

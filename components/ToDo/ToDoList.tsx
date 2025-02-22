@@ -20,6 +20,7 @@ interface TodoListProps {
   title: string;
 }
 
+// Displays the task list and the tasks within it
 export default function TodoList({ storageKey, title }: TodoListProps) {
   const [tasks, setTasks] = useLocalStorage<Task[]>(storageKey, []);
   const [filter, setFilter] = useState("all");
