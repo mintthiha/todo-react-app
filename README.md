@@ -1,4 +1,4 @@
-# todo-react-app
+# ToDo NextJS App
 
 ### Description
 
@@ -23,16 +23,18 @@ npm run start
 
 ### How to Deploy
 
+login to netlify, choose deploy from git and choose the repository. Next, in the branch, choose the 'main' branch and click deploy. However, if it isn't automatically filled, put `npm run build` in the build command, and `.next` in the publish directory. Enjoy!
+
 ### Attributions
 
-shadcn: https://ui.shadcn.com/
-nextjs: https://nextjs.org/
-localStorage: https://dev.to/collegewap/how-to-use-local-storage-in-nextjs-2l2j
+ShadCN: https://ui.shadcn.com/
+NextJS: https://nextjs.org/
+LocalStorage: https://dev.to/collegewap/how-to-use-local-storage-in-nextjs-2l2j
 Drag and Drop (Swapy): https://github.com/TahaSh/swapy/blob/main/examples/react/App.tsx
 
 ##### Link to Deployment
 
-Add link here when the time comes.
+https://thiha-ludex-todo-app.netlify.app/
 
 ##### Why NextJS?
 
