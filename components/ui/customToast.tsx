@@ -1,7 +1,7 @@
 "use client";
 
 import { toast } from "sonner";
-import { Button } from "./button"; // Ensure correct import path
+import { Button } from "./button";
 
 interface CustomToastProps {
   message: string;
@@ -9,6 +9,7 @@ interface CustomToastProps {
   duration?: number;
 }
 
+// Displays a custom toast message that is reusable
 export function customToast({ message, type = "info", duration = 5000 }: CustomToastProps) {
   const toastFunction = {
     success: toast.success,

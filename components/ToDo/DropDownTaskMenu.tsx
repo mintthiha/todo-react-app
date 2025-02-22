@@ -5,6 +5,7 @@ interface DropdownTaskMenuProps {
   onDelete: () => void;
 }
 
+// Displays the dropdown menu for the task
 const DropDownTaskMenu = ({ onDelete }: DropdownTaskMenuProps) => {
   return (
     <DropdownMenu>
@@ -14,7 +15,7 @@ const DropDownTaskMenu = ({ onDelete }: DropdownTaskMenuProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem className="text-orange-500"> Edit </DropdownMenuItem>
+        {/* <DropdownMenuItem className="text-orange-500"> Edit </DropdownMenuItem> */}
         <DropdownMenuItem onClick={onDelete} className="text-red-500">
           Delete
         </DropdownMenuItem>

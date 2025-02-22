@@ -2,6 +2,7 @@ import { useTheme } from "../hooks/useThemes";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
 
+// Displays the theme toggle button
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 

@@ -1,23 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import TaskList from "@/components/ToDo/ToDoList";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { customToast } from "./ui/customToast";
-// import { createSwapy, Swapy } from 'swapy';
+import { createSwapy, Swapy } from 'swapy';
 import TaskListMangerSideBar from "./TaskListManagerSideBar";
 
+// Displays the task list manager and the task lists within it
 export default function TaskListManager() {
   const [taskLists, setTaskLists] = useLocalStorage<{ id: string; title: string }[]>(
     "taskLists",
     []
   );
   const [newListTitle, setNewListTitle] = useState("");
-  // const swapyRef = useRef<Swapy | null>(null)
-  // const containerRef = useRef<HTMLDivElement>(null);
-  // const [taskOrder, setTaskOrder] = useLocalStorage<string[]>("taskOrder", []);
+  const swapyRef = useRef<Swapy | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [taskOrder, setTaskOrder] = useLocalStorage<string[]>("taskOrder", []);
 
+  // Adds a new task list to the task list manager with validation
   const addTaskList = () => {
     if (newListTitle.trim() === "") {
       customToast({ message: "The task list title can't be empty!", type: "warning" });
@@ -36,6 +38,7 @@ export default function TaskListManager() {
     customToast({ message: `Task list "${newListTitle}" added successfully!`, type: "success" });
   };
 
+  // Deletes a task list from the task list manager with toast notification
   const deleteTaskList = (id: string) => {
     const deletedList = taskLists.find((list) => list.id === id);
     setTaskLists(taskLists.filter((list) => list.id !== id));
@@ -45,53 +48,56 @@ export default function TaskListManager() {
     }
   };
 
-  // useEffect(() => {
-  //   if (!containerRef.current || swapyRef.current) return;
+  // Creates the swapy instance and updates the task order
+  useEffect(() => {
+    if (!containerRef.current || swapyRef.current) return;
   
-  //   swapyRef.current = createSwapy(containerRef.current, {
-  //     animation: "dynamic",
-  //     swapMode: "drop",
-  //     autoScrollOnDrag: true,
-  //     dragAxis: "both"
-  //   });
+    swapyRef.current = createSwapy(containerRef.current, {
+      animation: "dynamic",
+      swapMode: "drop",
+      autoScrollOnDrag: true,
+      dragAxis: "both"
+    });
   
-  //   if (taskOrder.length > 0) {
-  //     const orderedTasks = taskOrder
-  //       .map((id) => taskLists.find((task) => task.id === id))
-  //       .filter(Boolean) as { id: string; title: string }[];
+    if (taskOrder.length > 0) {
+      const orderedTasks = taskOrder
+        .map((id) => taskLists.find((task) => task.id === id))
+        .filter(Boolean) as { id: string; title: string }[];
   
-  //     setTaskLists(orderedTasks);
-  //   }
+      setTaskLists(orderedTasks);
+    }
   
-  //   return () => {
-  //     swapyRef.current?.destroy();
-  //   };
+    return () => {
+      swapyRef.current?.destroy();
+    };
     
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   
-  // useEffect(() => {
-  //   if (!swapyRef.current) return;
+  // Updates the task order when the swap ends
+  useEffect(() => {
+    if (!swapyRef.current) return;
   
-  //   swapyRef.current.onSwapEnd((event) => {
-  //     const newOrder = event.slotItemMap.asArray.map(({ item }) => item);
-  //     console.log("New Order of Task IDs:", newOrder);
-  //     setTaskOrder(newOrder);
-  //   });
+    swapyRef.current.onSwapEnd((event) => {
+      const newOrder = event.slotItemMap.asArray.map(({ item }) => item);
+      console.log("New Order of Task IDs:", newOrder);
+      setTaskOrder(newOrder);
+    });
   
-  //   swapyRef.current.update();
-  // }, [taskLists, setTaskOrder]);  
+    swapyRef.current.update();
+  }, [taskLists, setTaskOrder]);  
 
+  // Displays the task list manager and the task lists within it
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       <TaskListMangerSideBar newListTitle={newListTitle} setNewListTitle={setNewListTitle} addTaskList={addTaskList} />
 
-      <div className="w-full lg:w-4/5 bg-secondary p-4 overflow-y-auto" id="swapy-container">
+      <div className="w-full lg:w-4/5 bg-secondary p-4 overflow-y-auto" id="swapy-container" ref={containerRef}>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {taskLists.map((list) => (
             <div key={list.id} data-swapy-slot={list.id} className="relative">
               <div data-swapy-item={list.id}>
-                {/* <div className="absolute top-2 left-2 cursor-grab text-2xl leading-none text-gray-400" data-swapy-handle> ⋮⋮ </div> */}
+                <div className="absolute top-2 left-2 cursor-grab text-2xl leading-none text-gray-400" data-swapy-handle> ⋮⋮ </div>
                 <TaskList storageKey={`todo-list-${list.id}`} title={list.title} />
                 
                 <Button
